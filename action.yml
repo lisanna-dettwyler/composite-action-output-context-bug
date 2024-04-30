@@ -1,0 +1,21 @@
+name: 'Example Action'
+description: 'Demonstrate github context in composite action'
+
+runs:
+  using: 'composite'
+  steps:
+  - name: Show github.action_path
+    run: echo "The action path is ${{ github.action_path }}"
+    shell: bash
+  - name: Set output
+    id: set_output
+    run: echo "action_path_output=${{ github.action_path }}" >> $GITHUB_OUTPUT
+    shell: bash
+
+outputs:
+  action_path_inline:
+    description: 'The action path as an output from an inline expression'
+    value: ${{ github.action_path }}
+  action_path_step:
+    description: 'The action path as an output from a step'
+    value: ${{ steps.set_output.outputs.action_path_output }}
